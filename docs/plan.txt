@@ -1,0 +1,18 @@
+Project plan cards
+----------------------
+
+Data structures:
+- folders with music (preferably in a horrible mess)
+- internal database (text file?)
+
+
+1. From folder structure to internal representation
+    - list folders
+        - Linux and Windows specific commands
+    - process list and create hierarchy
+    - represent folders with internal structures
+        - classes ?
+    - save structure to file
+
+2. Analyzation of the current structure
+    -

@@ -1,0 +1,34 @@
+MAIDS
+Music Archiver and Intelligent Directory Sorter
+
+Máte neporiadok vo Vašej hudobnej kolekcíi? Narástol počet priečinkov typu "roztriedit_4" a 
+"Hudba_od_bratrancovej_frajerky_2" do neznesiteľného množstva? Neviete kde začať, ani kedy to celé skončí?
+Máme pre Vás smutnú správu - nikdy to neskončí. Začať to však môže práve tu a teraz!
+
+Prinášame Vám jedinečný, ručne vyrábaný, 100% slovenský produkt, s ktorým budete opäť o niečo ľahšie spávať. 
+Voláme ho jednoducho MAIDS - Music Archiver and Intelligent Directory Sorter (Hudobný Archivár a Inteligentný 
+Priečinkový Usporadúvač).
+
+Hlavné funkcie MAIDS sú:
+- analýza súčasnej hudobnej kolekcie
+- vytvorenie internej databázy
+- presúvanie priečinkov podľa schémy (na výber sú rôzne formáty priečinkového stromu)
+- normalizovanie názvov priečinkov a súborov
+- normalizovanie ID3 tagov (vymazanie zbytočných polí, odkazov na pofidérne stránky a pod.)
+
+Do búducnosti (ak čas výjde) plánujeme:
+- vytváranie playlistov na základe semi-náhodného algoritmu
+- analýza formátov súborov
+
+
+Programovací jazyk: Python 3
+Platforma a vývojové prostredie:
+Windows - Python IDE (Jaro)
+Linux - PyCharm (Marek)
+
+Unit tester pre Python:
+unittest
+https://docs.python.org/3/library/unittest.html
+
+Pre ďalšie info a zdrojový kód navštívte:
+https://github.com/MarekOsrman/maids
