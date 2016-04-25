@@ -1,5 +1,7 @@
 import os
 import re
+import test1_GUI
+
 
 INIT_PATH2="/mnt/data/Multimedia/Music/Collection/"
 INIT_PATH="/run/media/marek/Storage/Music/SORT/"
