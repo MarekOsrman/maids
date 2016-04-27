@@ -4,6 +4,10 @@ from tkinter import *
 
 
 
+
+import test1
+
+
 class MAIDS_Canvas:
 
     def __init__(self):
@@ -32,8 +36,13 @@ class MAIDS_Canvas:
         self.initialized_path = tk.Entry(frame)
         self.initialized_path.pack(fill=X, padx=10, pady=10)
 
-        PATH = self.initialized_path.get()
-        print(PATH)
+
+        frame2 = Frame(self.master)
+        frame2.pack(fill = X)
+
+        run_button = tk.Button(frame2, text="RUN", width=40, height=3, command=self.running(self.initialized_path.get()))
+        run_button.pack(fill=X, padx=10, pady=10)
+
         tk.mainloop()
 
 
@@ -44,6 +53,12 @@ class MAIDS_Canvas:
         self.initialized_path.insert(0, PATH)
 
 
+    def running(self, path):
+        if path == "":
+            """TODO - show some message to initialize the path"""
+            pass
+        else:
+            test1.Maiden(path)
 
 
 
