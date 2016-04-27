@@ -57,13 +57,16 @@ class MAIDS_Canvas(test1.Maiden):
 
     def running(self):
         path = self.initialized_path.get()
-        if path == "":
-            """TODO - show some message to initialize the path"""
+        if path == "Set some path!!!":
             pass
         else:
-            self.maid = test1.Maiden(path)
-            self.maid.handler_run()
-            self.outText.insert(END, "Artists: " + self.maid.get_artists() + "\n")
+            if path == "":
+                """TODO - show some message to initialize the path"""
+                self.initialized_path.insert(0, "Set some path!!!")
+            else:
+                self.maid = test1.Maiden(path)
+                self.maid.handler_run()
+                self.outText.insert(END, "Artists: " + self.maid.get_artists() + "\n")
 
 
 MC = MAIDS_Canvas()
