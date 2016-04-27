@@ -13,6 +13,44 @@ Data structures:
     - represent folders with internal structures
         - classes ?
     - save structure to file
+    - GUI
 
 2. Analyzation of the current structure
+    - clean up the mess
+    - tests
+    - regex operations
+    - conversions between file structures and text for tests
+    - split file names to artist, album, year...
+    - GUI
+    
+3. Comunication with user
     -
+
+Work progress:
+
+    Jaroslav Fúska:
+        Make a GUI:
+            - tkinter canvas                                - 1h            --- COMPLETED
+            - labels                                        - 1h            --- COMPLETED
+            - entry for path                                - 30m           --- COMPLETED
+            - button to select the path                     - 2h            --- COMPLETED
+            - run button                                    - 1h 30m        --- COMPLETED
+            - link theese elements with main classes        - 2h            --- COMPLETED
+            - outptut text area                             - 3h            --- IN PROGRESS
+            - comunication with user                        - ?             --- NOT STARTED
+            - refactoring                                   - 5h            --- NOT STARTED
+        
+
+    Marek Osman:
+        Make a main clases and functions:
+            - list folders                                  - ?             --- COMPLETED
+                - Linux and Windows specific commands   
+            - process list and create hierarchy             - ?             --- COMPLETED
+            - represent folders with internal structures    - ?             --- COMPLETED
+                - classes ?
+            - save structure to file                        - ?             --- IN PROGRESS
+            - refactorin                                    - ?             --- IN PROGRESS
+            - tests                                         - ?             --- IN PROGRESS
+            - regex operations                              - ?             --- COMPLETED
+            - conversions between file structures and text  - ?             --- IN PROGRESS
+            - split file names to artist, album, year...    - ?             --- COMPLETED
