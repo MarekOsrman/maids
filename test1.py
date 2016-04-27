@@ -243,4 +243,3 @@ print("Welcome to MAIDS !")
 #    pass
 #    #print(l)
 #text = mon.list_to_text(list)
-#print(text)

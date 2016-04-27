@@ -5,7 +5,6 @@ import test1
 
 
 class MAIDS_Canvas(test1.Maiden):
-
     def __init__(self):
         self.master = tk.Tk()
         self.master.title("MAIDS")
@@ -64,6 +63,5 @@ class MAIDS_Canvas(test1.Maiden):
             self.maid = test1.Maiden(path)
             self.maid.handler_run()
             self.outText.insert(END, "Artists: " + self.maid.get_artists() + "\n")
-
 
 MC = MAIDS_Canvas()
