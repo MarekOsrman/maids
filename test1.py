@@ -1,6 +1,5 @@
 import os
 import re
-import test1_GUI
 
 INIT_PATH2="/mnt/data/Multimedia/Music/Collection/"
 INIT_PATH3="/mnt/data/Multimedia/Music/SORT/"
@@ -109,6 +108,7 @@ class Monitor:
             if line.startswith("    "):
                 pass
             print(line)
+
 
 class Maiden:
     def __init__(self, init_path):
@@ -220,14 +220,22 @@ class Maiden:
 
         self.process_list(self.list, self.init_path)
 
+    def get_artists(self):
+        ret = ""
+        for artist in self.artists:
+            ret += artist.name
+            for album in artist.albums:
+                ret += "    " + album.year + "  " + album.name
+                ret += "\n"
 
+        return ret
 
 print("Welcome to MAIDS !")
 
-mb = Matchbox()
-m = Maiden(INIT_PATH3)
+#mb = Matchbox()
+#m = Maiden(INIT_PATH3)
 #m.handler_run()
-m.print_artists()
+#m.print_artists()
 
 #mon = Monitor()
 #list = mon.folder_to_list(INIT_PATH3)
@@ -235,4 +243,3 @@ m.print_artists()
 #    pass
 #    #print(l)
 #text = mon.list_to_text(list)
-#print(text)

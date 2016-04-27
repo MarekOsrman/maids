@@ -1,15 +1,10 @@
 import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
-
-
-
-
 import test1
 
 
-class MAIDS_Canvas:
-
+class MAIDS_Canvas(test1.Maiden):
     def __init__(self):
         self.master = tk.Tk()
         self.master.title("MAIDS")
@@ -40,8 +35,14 @@ class MAIDS_Canvas:
         frame2 = Frame(self.master)
         frame2.pack(fill = X)
 
-        run_button = tk.Button(frame2, text="RUN", width=40, height=3, command=self.running(self.initialized_path.get()))
+        run_button = tk.Button(frame2, text="RUN", width=40, height=3, command=self.running)
         run_button.pack(fill=X, padx=10, pady=10)
+
+        outFrame = Frame(self.master)
+        outFrame.pack(fill=X)
+
+        self.outText = Text(outFrame, height=10)
+        self.outText.pack(fill=X)
 
         tk.mainloop()
 
@@ -53,13 +54,14 @@ class MAIDS_Canvas:
         self.initialized_path.insert(0, PATH)
 
 
-    def running(self, path):
+    def running(self):
+        path = self.initialized_path.get()
         if path == "":
             """TODO - show some message to initialize the path"""
             pass
         else:
-            test1.Maiden(path)
-
-
+            self.maid = test1.Maiden(path)
+            self.maid.handler_run()
+            self.outText.insert(END, "Artists: " + self.maid.get_artists() + "\n")
 
 MC = MAIDS_Canvas()
