@@ -116,7 +116,9 @@ class Maiden:
         if not self.init_path.endswith("/"):
             self.init_path += "/"
         self.artists = []
-        self.init_artibtrary_artists()
+        #self.init_artibtrary_artists()
+
+        self.mb = Matchbox()
 
         #self.process_path(self.init_path)
 
@@ -133,13 +135,13 @@ class Maiden:
         """Process current path and recursively descend into each of the directories listed."""
         for entry in os.scandir(path):
             if entry.is_dir():
-                if not re.match(mb.omit_directories, entry.name):
+                if not re.match(self.mb.omit_directories, entry.name):
                     self.process_dir(entry.name, path + entry.name)
                 self.process_path(path + entry.name + "/")
 
     def process_list(self, list, path):
         for entry in list:
-            if not re.match(mb.omit_directories, entry[0]):
+            if not re.match(self.mb.omit_directories, entry[0]):
                 self.process_dir(entry[0], path + entry[0])
             if len(entry) > 1:
                 self.process_list(entry[1], path + entry[0] + "/")
@@ -156,7 +158,7 @@ class Maiden:
 
     def analyze_tags(self, input):
         tags = []
-        for (tag_name, tag_regx) in mb.tags:
+        for (tag_name, tag_regx) in self.mb.tags:
             m = re.search(tag_regx, input)
             if m:
                 input = re.sub(tag_regx, '', input)
@@ -175,12 +177,12 @@ class Maiden:
 
     def insert_album(self, artist, album_str, curr_path):
         """Insert new album for the artist."""
-        m = re.search(mb.years, album_str)
-        album_str = re.sub(mb.years, '', album_str)
+        m = re.search(self.mb.years, album_str)
+        album_str = re.sub(self.mb.years, '', album_str)
         new_album = Album(self.parse_post(album_str), curr_path)
         if m:
             year = m.group(0)
-            year = re.sub(mb.brackets, '', year)
+            year = re.sub(self.mb.brackets, '', year)
             new_album.set_year(year)
 
         artist.add_album(new_album)
@@ -188,7 +190,7 @@ class Maiden:
 
     def parse_pre(self, input):
         """Delete obsolete keywords before splitting."""
-        input = re.sub(mb.delete_keywords, '', input)
+        input = re.sub(self.mb.delete_keywords, '', input)
 
         return input
 
@@ -210,10 +212,14 @@ class Maiden:
 
     def print_artists(self):
         """Simple printout for the database."""
+        result = ""
         for artist in self.artists:
-            print(artist.name)
+            result += artist.name + '\n'
+            #print(artist.name)
             for album in artist.albums:
-                print("    " + album.year + "  " + album.name)
+                result += "    " + album.year + "  " + album.name + '\n'
+                #print("    " + album.year + "  " + album.name)
+        return result
 
     def handler_run(self):
         self.list = self.mon.folder_to_list(self.init_path)

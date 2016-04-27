@@ -62,6 +62,6 @@ class MAIDS_Canvas(test1.Maiden):
         else:
             self.maid = test1.Maiden(path)
             self.maid.handler_run()
-            self.outText.insert(END, "Artists: " + self.maid.get_artists() + "\n")
+            self.outText.insert(END, "Artists: " + self.maid.print_artists() + "\n")
 
 MC = MAIDS_Canvas()
