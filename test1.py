@@ -1,11 +1,22 @@
 import os
 import re
+import argparse
+import json
 
 INIT_PATH2="/mnt/data/Multimedia/Music/Collection/"
 INIT_PATH3="/mnt/data/Multimedia/Music/SORT/"
 INIT_PATH="/run/media/marek/Storage/Music/SORT/"
 INIT_PATH_SD="/run/media/marek/7266-0950"
 
+
+class Argumentor:
+    def __init__(self):
+        self.parser = argparse.ArgumentParser()
+        self.parser.add_argument("path", help="The path that will be analyzed")
+
+        self.args = self.parser.parse_args()
+
+        self.path = self.args.path
 
 
 class Matchbox:
@@ -101,47 +112,29 @@ class Monitor:
 
         return process(list, 0)
 
-    def text_to_list(self, text):
-        # TODOOOOOO
-        list = []
-        for line in text.splitlines():
-            if line.startswith("    "):
-                pass
-            print(line)
+    def list_to_json(self, list):
+        return json.dumps(list, separators=(',', ':'), sort_keys=True, indent=2)
 
+    def json_to_list(self, input):
+        return json.loads(input)
 
 class Maiden:
-    def __init__(self, init_path):
+    def __init__(self, init_path, box):
         self.init_path = init_path
         if not self.init_path.endswith("/"):
             self.init_path += "/"
         self.artists = []
-        #self.init_artibtrary_artists()
 
-        self.mb = Matchbox()
-
-        #self.process_path(self.init_path)
-
+        self.box = box
         self.mon = Monitor()
-        #list = self.mon.folder_to_list(self.init_path)
 
-        #self.process_list(list, self.init_path)
+        self.list = self.mon.folder_to_list(self.init_path)
 
-    def init_artibtrary_artists(self):
-        self.insert_artist("_OST")
-        self.insert_artist("_VA")
-
-    def process_path(self, path):
-        """Process current path and recursively descend into each of the directories listed."""
-        for entry in os.scandir(path):
-            if entry.is_dir():
-                if not re.match(self.mb.omit_directories, entry.name):
-                    self.process_dir(entry.name, path + entry.name)
-                self.process_path(path + entry.name + "/")
+        self.process_list(self.list, self.init_path)
 
     def process_list(self, list, path):
         for entry in list:
-            if not re.match(self.mb.omit_directories, entry[0]):
+            if not re.match(self.box.omit_directories, entry[0]):
                 self.process_dir(entry[0], path + entry[0])
             if len(entry) > 1:
                 self.process_list(entry[1], path + entry[0] + "/")
@@ -158,7 +151,7 @@ class Maiden:
 
     def analyze_tags(self, input):
         tags = []
-        for (tag_name, tag_regx) in self.mb.tags:
+        for (tag_name, tag_regx) in self.box.tags:
             m = re.search(tag_regx, input)
             if m:
                 input = re.sub(tag_regx, '', input)
@@ -177,12 +170,12 @@ class Maiden:
 
     def insert_album(self, artist, album_str, curr_path):
         """Insert new album for the artist."""
-        m = re.search(self.mb.years, album_str)
-        album_str = re.sub(self.mb.years, '', album_str)
+        m = re.search(self.box.years, album_str)
+        album_str = re.sub(self.box.years, '', album_str)
         new_album = Album(self.parse_post(album_str), curr_path)
         if m:
             year = m.group(0)
-            year = re.sub(self.mb.brackets, '', year)
+            year = re.sub(self.box.brackets, '', year)
             new_album.set_year(year)
 
         artist.add_album(new_album)
@@ -190,7 +183,7 @@ class Maiden:
 
     def parse_pre(self, input):
         """Delete obsolete keywords before splitting."""
-        input = re.sub(self.mb.delete_keywords, '', input)
+        input = re.sub(self.box.delete_keywords, '', input)
 
         return input
 
@@ -203,7 +196,7 @@ class Maiden:
         return input
 
     def dir_split(self, input):
-        """Split the input by the dash delimeter."""
+        """Split the input by the dash delimeter. Artist - Album"""
         parts = input.split(" - ", maxsplit=1)
         if len(parts) == 2:
             return parts[0], parts[1]
@@ -222,9 +215,7 @@ class Maiden:
         return result
 
     def handler_run(self):
-        self.list = self.mon.folder_to_list(self.init_path)
-
-        self.process_list(self.list, self.init_path)
+        pass
 
     def get_artists(self):
         ret = ""
@@ -236,16 +227,16 @@ class Maiden:
 
         return ret
 
-print("Welcome to MAIDS !")
+if __name__ == "__main__":
+    print("Welcome to MAIDS !")
 
-#mb = Matchbox()
-#m = Maiden(INIT_PATH3)
-#m.handler_run()
-#m.print_artists()
+    arg = Argumentor()
 
-#mon = Monitor()
-#list = mon.folder_to_list(INIT_PATH3)
-#for l in list:
-#    pass
-#    #print(l)
-#text = mon.list_to_text(list)
+    box = Matchbox()
+    maid = Maiden(arg.path, box)
+    #m.handler_run()
+    #print(maid.print_artists())
+    #print(maid.list)
+    j = json.dumps(maid.artists, separators=(',', ':'), sort_keys=True, indent=2)
+    print(j)
+    print(json.loads(j) == maid.artists)
